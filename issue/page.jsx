@@ -1,10 +1,10 @@
 import React from 'react'
-import { Flex, Text, Button } from '@radix-ui/themes';
+import { Flex, Text, Button, Link } from '@radix-ui/themes';
 
 export default function page() {
   return (
     <div>
-      <Button>New Issue</Button>
+      <Button><Link href='/issue/new' >New issue</Link></Button>
     </div>
   )
 }
