@@ -4,6 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import { FaBug } from "react-icons/fa";
 import classnames from 'classnames';
+import { Flex, Text, Button } from '@radix-ui/themes';
 
 function NavBar() {
    const currentPath = usePathname();
