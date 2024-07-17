@@ -1,12 +1,13 @@
+import Link from "next/link";
+import { Button } from "@radix-ui/themes";
 import React from "react";
-import { Flex, Text, Button, Link } from "@radix-ui/themes";
 
-export default function page() {
+const NewIssueButton = () => {
   return (
-    <div>
-      <Button>
-        <Link href="/issue/new">New issue</Link>
-      </Button>
-    </div>
+    <Link href="/issue/new">
+      <Button style={{ background: "yellowgreen" }}>New issue</Button>
+    </Link>
   );
-}
+};
+
+export default NewIssueButton;
