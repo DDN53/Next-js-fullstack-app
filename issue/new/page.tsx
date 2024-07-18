@@ -9,6 +9,7 @@ import { createIssueSchema } from "@/app/validationSchema";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import ErrorMessage from "@/app/components/ErrorMessage";
 type IssueForm = z.infer<typeof createIssueSchema>;
 
 const NewIssuePage = () => {
@@ -44,18 +45,15 @@ const NewIssuePage = () => {
           placeholder="Title…"
           {...register("title", { required: false })}
         ></TextField.Root>
-        {errors.title && (
-          <span className="text-red-700">{errors.title.message}</span>
-        )}
+        <ErrorMessage>{errors.title?.message}</ErrorMessage>
         <Controller
           name="description"
           control={control}
           render={({ field }) => (
             <div>
               <SimpleMDE {...field} placeholder="Description…" />
-              {errors.title && (
-                <span className="text-red-700">{errors.title.message}</span>
-              )}
+
+              <ErrorMessage>{errors.title?.message}</ErrorMessage>
             </div>
           )}
         />
