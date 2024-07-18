@@ -5,17 +5,23 @@ import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { createIssueSchema } from "@/app/validationSchema";
 import axios from "axios";
-
-interface IssueForm {
-  title: string;
-  description: string;
-}
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+type IssueForm = z.infer<typeof createIssueSchema>;
 
 const NewIssuePage = () => {
   const [error, setError] = useState("");
   const router = useRouter();
-  const { register, control, handleSubmit } = useForm<IssueForm>();
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IssueForm>({
+    resolver: zodResolver(createIssueSchema),
+  });
 
   const onSubmit = async (data: IssueForm) => {
     try {
@@ -38,11 +44,19 @@ const NewIssuePage = () => {
           placeholder="Title…"
           {...register("title", { required: false })}
         ></TextField.Root>
+        {errors.title && (
+          <span className="text-red-700">{errors.title.message}</span>
+        )}
         <Controller
           name="description"
           control={control}
           render={({ field }) => (
-            <SimpleMDE {...field} placeholder="Description…" />
+            <div>
+              <SimpleMDE {...field} placeholder="Description…" />
+              {errors.title && (
+                <span className="text-red-700">{errors.title.message}</span>
+              )}
+            </div>
           )}
         />
         <Button style={{ background: "yellowgreen" }} type="submit">
