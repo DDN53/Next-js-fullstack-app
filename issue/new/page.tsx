@@ -10,10 +10,12 @@ import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import ErrorMessage from "@/app/components/ErrorMessage";
+import Snipper from "@/app/components/Snipper";
 type IssueForm = z.infer<typeof createIssueSchema>;
 
 const NewIssuePage = () => {
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const {
     register,
@@ -26,9 +28,11 @@ const NewIssuePage = () => {
 
   const onSubmit = async (data: IssueForm) => {
     try {
+      setIsLoading(true);
       await axios.post("/api/issues", data);
       router.push("/issue");
     } catch (error) {
+      setIsLoading(false);
       setError("An unexpeted error occured");
     }
   };
@@ -57,8 +61,12 @@ const NewIssuePage = () => {
             </div>
           )}
         />
-        <Button style={{ background: "yellowgreen" }} type="submit">
-          Submit new issue
+        <Button
+          style={{ background: "yellowgreen" }}
+          type="submit"
+          disabled={isLoading}
+        >
+          Submit new issue{isLoading && <Snipper></Snipper>}
         </Button>
       </form>
     </div>
