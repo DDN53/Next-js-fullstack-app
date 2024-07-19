@@ -10,7 +10,16 @@ const config: Config = {
   testEnvironment: "jsdom",
   transform: {
     "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
+    jsx: "react-jsx",
   },
+  verbose: true,
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/app/$1",
+  },
+  preset: "ts-jest",
+
+  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+  transformIgnorePatterns: ["/node_modules/"],
 };
 
 export default createJestConfig(config);
