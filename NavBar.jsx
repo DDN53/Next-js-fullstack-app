@@ -12,6 +12,8 @@ function NavBar() {
     {
       label:'DashBoard',href:'/',id:1},
       {label:'issue',href:'/issue',id:2},
+      {label:'about',href:'/about',id:3},
+      {label:'careers',href:'/careers',id:4},
     
   ]
   return (

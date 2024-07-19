@@ -10,17 +10,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id       String   @id @default(uuid())
+  name     String   @db.VarChar(255)
+  email    String   @unique
+  password String   @db.VarChar(255)
+  role     Userrole @default(USER)
+  issues   Issue[]
+}
+
 model Issue {
   id          Int      @id @default(autoincrement())
-  title       String   @db.VarChar(255)
+  title       String
   description String   @db.Text
   status      Status   @default(OPEN)
+  role        Userrole @default(USER)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
 }
 
 enum Status {
   OPEN
   IN_PROGRESS
   CLOSED
+}
+
+enum Userrole {
+  ADMIN
+  USER
 }
